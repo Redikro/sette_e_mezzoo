@@ -1,15 +1,24 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import UI.Nuova_partita;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+import javax.swing.*;
+import java.awt.*;
+import UI.*;
+
+public class Main extends JFrame {
+    JButton button = new JButton("Nuova partita");
+    public Main() {
+        button.addActionListener(_ -> {
+            new Nuova_partita();
+        });
+        add(button);
+        setTitle("Sette e Mezzo");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(730, 540);
+        setResizable(true);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new Main();
     }
 }
