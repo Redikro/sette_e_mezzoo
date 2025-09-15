@@ -27,7 +27,7 @@ public class Carta {
     private ImageIcon caricaImmagine() {
         String path = "out/png_carte" + this.seme.toString()+this.valore.toString();
         ImageIcon immaginecarta = new ImageIcon(path);
-        if (immaginecarta == null) {
+        if (immaginecarta.getIconWidth() == -1) {
             throw new NullPointerException("Immagine non esiste");
         }
         return immaginecarta;
