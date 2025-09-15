@@ -9,10 +9,10 @@ public enum Seme {
     @Override
     public String toString() {
         return switch (this) {
-            case DENARI -> "Denari";
-            case COPPE -> "Coppe";
-            case SPADE -> "Spade";
-            case BASTONI -> "Bastoni";
+            case DENARI -> "denari";
+            case COPPE -> "coppe";
+            case SPADE -> "spade";
+            case BASTONI -> "bastoni";
         };
     }
 }
