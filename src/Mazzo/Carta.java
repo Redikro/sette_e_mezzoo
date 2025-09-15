@@ -33,6 +33,7 @@ public class Carta {
         return immaginecarta;
     }
 
+    // get seme e valore
     public Seme getSeme(){
         return seme;
     }
