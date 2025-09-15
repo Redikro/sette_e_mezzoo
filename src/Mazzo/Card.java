@@ -1,5 +1,8 @@
 package Mazzo;
 
+/**
+ * Una carta ha un seme e un valore
+ */
 public class Card {
     private final Seme seme;
     private final Valore valore; //da aggiungere immagine

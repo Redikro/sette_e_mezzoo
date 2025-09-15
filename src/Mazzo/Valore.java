@@ -1,5 +1,8 @@
 package Mazzo;
 
+/**
+ * Valore della carta
+ */
 public enum Valore {
     ASSO(1, "Asso"),
     DUE(2, "2"),

@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 public class CardFactory {
 
-    // Crea una singola carta
     public static Card createCard(Seme seme, Valore valore) {
         return new Card(seme, valore);
     }
 
-    // Crea un mazzo completo da 40 carte napoletane
+    /**
+     * @return la lista delle singole carte che compongono un mazzo
+     */
     public static List<Card> createNapoletaneDeck() {
         List<Card> deck = new ArrayList<>(40);
         for (Seme s : Seme.values()) {
