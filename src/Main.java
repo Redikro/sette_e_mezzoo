@@ -1,4 +1,3 @@
-import UI.Nuova_partita;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,7 @@ public class Main extends JFrame {
     JPanel panel = new JPanel();
     public Main() {
         button.addActionListener(_ -> {
-            new Nuova_partita();
+            new TavoloCarte();
             this.dispose();
         });
         try{
