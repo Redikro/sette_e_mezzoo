@@ -2,6 +2,8 @@ package Mazzo;
 
 import Factory_method.CardFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Mazzo {
@@ -14,14 +16,35 @@ public class Mazzo {
     }
 
     private final List<Card> original = CardFactory.createNapoletaneDeck(); // ordine base (per reset)
-    private final List<Card> cards = CardFactory.createNapoletaneDeck();
+    private List<Card> mazzo = CardFactory.createNapoletaneDeck();
 
-    public List<Card> getCards() {
-        return cards;
+    public List<Card> getMazzo() {
+        return mazzo;
     }
 
     public List<Card> getOriginal() {
         return original;
+    }
+
+    public void resettaMazzo(){
+        this.mazzo = original;
+    }
+
+    public void mischiaCarte() {
+        Collections.shuffle(mazzo);
+    }
+
+    public void resetAndShuffle() {
+        resettaMazzo();
+        mischiaCarte();
+    }
+
+    public int remaining() {
+        return mazzo.size();
+    }
+
+    public List<Card> getRemainingCardsSnapshot() {
+        return new ArrayList<>(mazzo);
     }
 
     private Mazzo() {}
