@@ -3,11 +3,11 @@ package Mazzo;
 /**
  * Una carta ha un seme e un valore
  */
-public class Card {
+public class Carta {
     private final Seme seme;
     private final Valore valore; //da aggiungere immagine
 
-    public Card(Seme seme, Valore valore) {
+    public Carta(Seme seme, Valore valore) {
         this.seme = seme;
         this.valore = valore;
     }
@@ -30,7 +30,7 @@ public class Card {
         if (this == o)
             return true;
 
-        if (!(o instanceof Card c))
+        if (!(o instanceof Carta c))
             return false;
 
         return seme == c.seme && valore == c.valore;

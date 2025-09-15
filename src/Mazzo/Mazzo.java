@@ -8,13 +8,13 @@ import java.util.List;
 
 public class Mazzo {
     private static Mazzo instance;
-    private final List<Card> original = CardFactory.createNapoletaneDeck(); // ordine base (per reset)
-    private List<Card> mazzo = CardFactory.createNapoletaneDeck();
+    private final List<Carta> original = CardFactory.createNapoletaneDeck(); // ordine base (per reset)
+    private List<Carta> mazzo = CardFactory.createNapoletaneDeck();
 
     /**
      * @return il mazzo corrente
      */
-    public List<Card> getMazzo() {
+    public List<Carta> getMazzo() {
         return mazzo;
     }
     /**
@@ -31,7 +31,7 @@ public class Mazzo {
     /**
      * @return il mazzo originale
      */
-    public List<Card> getOriginal() {
+    public List<Carta> getOriginal() {
         return original;
     }
 
@@ -60,7 +60,7 @@ public class Mazzo {
      *
      * @return lista di carte che rimangono nel mazzo
      */
-    public List<Card> getRemainingCardsSnapshot() {
+    public List<Carta> getRemainingCardsSnapshot() {
         return new ArrayList<>(mazzo);
     }
 
