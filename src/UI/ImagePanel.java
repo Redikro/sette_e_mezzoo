@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ImagePanel extends JPanel {
-    private static final Image image = new ImageIcon();
+    private final Image image;
 
-    public static ImagePanel(String img, int width, int height) {
+    public ImagePanel(String img, int width, int height) {
         image = new ImageIcon(img).getImage();
         setPreferredSize(new Dimension(width, height));
     }

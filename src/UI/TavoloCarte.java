@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class TavoloCarte extends JFrame {
     private final GiocatorePanel g1, g2, g3, g4;
-    private JPanel actionPanel;
+    private JPanel actionPanel = new JPanel();
     private JButton drawButton,finishButton,putButton;
     private ImagePanel panel;
 
@@ -16,8 +16,6 @@ public class TavoloCarte extends JFrame {
         panel.setSize(new Dimension(panel.getWidth(), panel.getHeight()));
         return panel;
     }
-
-
 
     public TavoloCarte(String nome1,String nome2, String nome3, String nome4) {
         initializeFrame();
@@ -28,6 +26,8 @@ public class TavoloCarte extends JFrame {
         g4 = new GiocatorePanel(nome4, 270);
 
         setPanelsSettings();
+
+
 
         add(new JPanel()); add(g3); add(new JPanel());
         add(g2); add(new JPanel()); add(g4);
