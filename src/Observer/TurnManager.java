@@ -5,11 +5,12 @@ import Mazzo.Mazzo;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class TurnManager implements TurnSubject {
     private final List<TurnObserver> observers = new ArrayList<>();
     private final List<Giocatore> giocatore = new ArrayList<>();
     private int index = 0;
-
+    private int puntata = 0;
     public void aggiungiGiocatore(Giocatore giocatore) {
         this.giocatore.add(giocatore);
         addObserver(giocatore);

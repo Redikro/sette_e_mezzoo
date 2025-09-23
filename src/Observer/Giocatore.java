@@ -8,6 +8,16 @@ public class Giocatore implements TurnObserver {
     private final String nome;
     private final List<Carta> mano = new ArrayList<>();
     private double punteggio = 0;
+    private int gettoni = 0;
+
+    public void setGettoni(int g){
+        this.gettoni = g;
+    }
+
+    public int getGettoni() {
+        return gettoni;
+    }
+
     private boolean fermo = false;
 
     public Giocatore(String nome) {
