@@ -17,10 +17,6 @@ public class GiocatorePanel extends JPanel {
         setOpaque(false);
     }
 
-    public void aggiungiCarta(ImageIcon carta) {
-        carteInMano.add(carta);
-        repaint();
-    }
 
     public void resetCarte() {
         carteInMano.clear();

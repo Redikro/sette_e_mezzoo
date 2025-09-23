@@ -5,6 +5,16 @@ import java.awt.*;
 
 public class TavoloCarte extends JFrame {
     private final GiocatorePanel g1, g2, g3, g4;
+    private JPanel actionPanel;
+    private JButton drawButton,finishButton,putButton;
+    private ImagePanel panel;
+
+    public ImagePanel getImagePanel(String type, String value) {
+        panel = new ImagePanel("out/png_carte/" + type + value + ".png",160,230);
+        panel.setSize(new Dimension(panel.getWidth(), panel.getHeight()));
+        return panel;
+    }
+
 
     public TavoloCarte(String nome1,String nome2, String nome3, String nome4) {
         setTitle("Tavolo da Carte");
@@ -30,9 +40,7 @@ public class TavoloCarte extends JFrame {
         add(g2); add(new JPanel()); add(g4);
         add(new JPanel()); add(g1); add(new JPanel());
 
-        g1.aggiungiCarta(new ImageIcon("out/png_carte/bastoni1.png"));
-        g1.aggiungiCarta(new ImageIcon("out/png_carte/bastoni2.png"));
-
+        g1.add(getImagePanel("bastoni","1"));
         revalidate();
         repaint();
 
