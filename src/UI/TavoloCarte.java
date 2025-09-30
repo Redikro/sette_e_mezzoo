@@ -1,16 +1,21 @@
 package UI;
 
 import Mazzo.*;
+import Observer.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TavoloCarte extends JFrame {
     private final GiocatorePanel g1, g2, g3, g4;
+    private Giocatore giocatore1, giocatore2, giocatore3, giocatore4;
     private JPanel actionPanel = new JPanel();
     private JButton drawButton,finishButton,putButton;
     private ImagePanel panel;
-
+    private final TurnManager turnManager = new TurnManager();
     public ImagePanel getImagePanel(Seme seme, Valore value) {
         panel = new ImagePanel("out/png_carte/" + seme + value + ".png",160,230);
         panel.setSize(new Dimension(panel.getWidth(), panel.getHeight()));
@@ -27,6 +32,12 @@ public class TavoloCarte extends JFrame {
 
         setPanelsSettings();
 
+        giocatore1 = new Giocatore(nome1);
+        giocatore2 = new Giocatore(nome2);
+        giocatore3 = new Giocatore(nome3);
+        giocatore4 = new Giocatore(nome4);
+
+        addObservers();
 
 
         add(new JPanel()); add(g3); add(new JPanel());
@@ -35,9 +46,11 @@ public class TavoloCarte extends JFrame {
 
         drawButton = new JButton("Pesca");
         putButton = new JButton("Punta");
-        finishButton = new JButton("Stai");
-
+        finishButton = new JButton("Passa");
+        g1.add(finishButton, BorderLayout.WEST);
         final int[] puntata = new int[1];
+
+        finishButton.addActionListener(_ -> turnManager.nextTurn());
         
         putButton.addActionListener(e -> {
             String input = JOptionPane.showInputDialog(
@@ -80,6 +93,12 @@ public class TavoloCarte extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 800);
         setLayout(new GridLayout(3, 3));
+        try {
+            setIconImage(ImageIO.read(new File("out/png_carte/bastoni1.png")));
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     private void setPanelsSettings(){
@@ -88,9 +107,16 @@ public class TavoloCarte extends JFrame {
         g2.setOpaque(true);
         g3.setOpaque(true);
         g4.setOpaque(true);
-        g1.setBorder(BorderFactory.createLineBorder(Color.RED,4));
-        g2.setBorder(BorderFactory.createLineBorder(Color.RED,4));
-        g3.setBorder(BorderFactory.createLineBorder(Color.RED,4));
-        g4.setBorder(BorderFactory.createLineBorder(Color.RED,4));
+        g1.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+        g2.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+        g3.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+        g4.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+    }
+
+    private void addObservers(){
+        turnManager.aggiungiGiocatore(giocatore1);
+        turnManager.aggiungiGiocatore(giocatore2);
+        turnManager.aggiungiGiocatore(giocatore3);
+        turnManager.aggiungiGiocatore(giocatore4);
     }
 }

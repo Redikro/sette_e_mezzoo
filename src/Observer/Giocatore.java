@@ -44,7 +44,7 @@ public class Giocatore implements TurnObserver {
     @Override
     public void onTurnChanged(Giocatore currentPlayer) {
         if (this == currentPlayer) {
-            System.out.println("\n👉 È il turno di " + nome);
+            System.out.println("\n👉 È il turno di " + this.nome);
         }
     }
 }

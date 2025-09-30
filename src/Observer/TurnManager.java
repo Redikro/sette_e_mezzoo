@@ -7,8 +7,8 @@ import java.util.List;
 
 
 public class TurnManager implements TurnSubject {
-    private final List<TurnObserver> observers = new ArrayList<>();
-    private final List<Giocatore> giocatore = new ArrayList<>();
+    private final List<TurnObserver> observers = new ArrayList<>(4);
+    private final List<Giocatore> giocatore = new ArrayList<>(4);
     private int index = 0;
     private int puntata = 0;
     public void aggiungiGiocatore(Giocatore giocatore) {
@@ -16,10 +16,15 @@ public class TurnManager implements TurnSubject {
         addObserver(giocatore);
     }
 
-    public void nextTurn() {
-        index =  (index + 1) % observers.size();
-        notifyObservers();
-    }
+
+        public void nextTurn() {
+        if (giocatore.get(index).getNome() == "") {
+            nextTurn();
+        }
+            index = (index + 1) % observers.size();
+            notifyObservers();
+            }
+
 
     public Giocatore getGiocatoreCorrente() {
         return giocatore.get(index);
@@ -45,6 +50,7 @@ public class TurnManager implements TurnSubject {
     @Override
     public void removeObserver(TurnObserver observer) {
         observers.remove(observer);
+        giocatore.remove(observer);
     }
 
     /**
