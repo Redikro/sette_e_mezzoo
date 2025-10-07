@@ -15,7 +15,16 @@ public class Main extends JFrame {
     private JTextField nome4 = new JTextField();
     public Main() {
         button.addActionListener(_ -> {
-            new TavoloCarte(nome1.getText(), nome2.getText(), nome3.getText(), nome4.getText());
+            SpinnerNumberModel model = new SpinnerNumberModel(10, 1, 20, 1);
+            JSpinner spinner = new JSpinner(model);
+
+            int gettoni = JOptionPane.showConfirmDialog(
+                    null,
+                    spinner,
+                    "Inserisci il numero di gettoni iniziali per tutti i giocatori",
+                    JOptionPane.OK_CANCEL_OPTION
+                    );
+            new TavoloCarte(gettoni,nome1.getText(), nome2.getText(), nome3.getText(), nome4.getText());
             this.dispose();
         });
         try{
@@ -53,7 +62,7 @@ public class Main extends JFrame {
         setResizable(true);
         setVisible(true);
     }
-    public static void main(String[] args) {
+    static void main(String[] args) {
         new Main();
     }
 }

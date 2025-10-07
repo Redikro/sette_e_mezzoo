@@ -20,8 +20,9 @@ public class Giocatore implements TurnObserver {
 
     private boolean fermo = false;
 
-    public Giocatore(String nome) {
+    public Giocatore(String nome,int gettoni) {
         this.nome = nome;
+        this.gettoni = gettoni;
     }
 
     public String getNome() {

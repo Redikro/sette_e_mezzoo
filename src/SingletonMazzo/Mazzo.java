@@ -1,6 +1,7 @@
-package Mazzo;
+package SingletonMazzo;
 
 import Factory_method.CardFactory;
+import Mazzo.Carta;
 
 import java.util.ArrayList;
 import java.util.Collections;

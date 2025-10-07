@@ -1,6 +1,6 @@
 package Observer;
 
-import Mazzo.Mazzo;
+import SingletonMazzo.Mazzo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +16,13 @@ public class TurnManager implements TurnSubject {
         addObserver(giocatore);
     }
 
-
-        public void nextTurn() {
+    public void nextTurn() {
         if (giocatore.get(index).getNome() == "") {
             nextTurn();
         }
             index = (index + 1) % observers.size();
             notifyObservers();
-            }
+    }
 
 
     public Giocatore getGiocatoreCorrente() {

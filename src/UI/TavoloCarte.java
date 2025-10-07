@@ -22,7 +22,7 @@ public class TavoloCarte extends JFrame {
         return panel;
     }
 
-    public TavoloCarte(String nome1,String nome2, String nome3, String nome4) {
+    public TavoloCarte(int ngettoni,String nome1,String nome2, String nome3, String nome4) {
         initializeFrame();
         // Creo pannelli giocatori
         g1 = new GiocatorePanel(nome1, 0);
@@ -32,13 +32,12 @@ public class TavoloCarte extends JFrame {
 
         setPanelsSettings();
 
-        giocatore1 = new Giocatore(nome1);
-        giocatore2 = new Giocatore(nome2);
-        giocatore3 = new Giocatore(nome3);
-        giocatore4 = new Giocatore(nome4);
+        giocatore1 = new Giocatore(nome1,ngettoni);
+        giocatore2 = new Giocatore(nome2,ngettoni);
+        giocatore3 = new Giocatore(nome3,ngettoni);
+        giocatore4 = new Giocatore(nome4,ngettoni);
 
         addObservers();
-
 
         add(new JPanel()); add(g3); add(new JPanel());
         add(g2); add(new JPanel()); add(g4);
