@@ -7,8 +7,9 @@ import java.util.List;
 public class Giocatore implements TurnObserver {
     private final String nome;
     private final List<Carta> mano = new ArrayList<>();
-    private double punteggio = 0;
-    private int gettoni = 0;
+    private int gettoni;
+    private int puntata = 0;
+    private boolean mazziere = false;
 
     public void setGettoni(int g){
         this.gettoni = g;
@@ -18,25 +19,34 @@ public class Giocatore implements TurnObserver {
         return gettoni;
     }
 
-    private boolean fermo = false;
-
     public Giocatore(String nome,int gettoni) {
         this.nome = nome;
         this.gettoni = gettoni;
     }
 
-    public String getNome() {
-        return nome;
+    public List<Carta> getMano() {
+        return mano;
     }
 
-    public double getPunteggio() {
+    public float getPunteggioCarte(){
+        float punteggio = 0;
+        for(Carta c : mano){
+            punteggio += c.getRealVal();
+        }
         return punteggio;
     }
 
-    public boolean isFermo() {
-        return fermo;
+    public void punta(int puntata){
+        this.puntata += puntata;
     }
 
+    public int getPuntata(){
+        return this.puntata;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
 
     /**
      * Notifica il turno del giocatore corrente

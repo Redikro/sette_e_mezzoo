@@ -26,9 +26,6 @@ public enum Valore {
         this.realVal = realVal;
     }
 
-    public int getValue(){
-        return this.value;
-    }
     public float getRealVal(){
         return this.realVal;
     }

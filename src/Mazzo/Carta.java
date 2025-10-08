@@ -18,6 +18,11 @@ public class Carta {
     public Seme getSeme(){
         return seme;
     }
+
+    public float getRealVal(){
+        return valore.getRealVal();
+    }
+
     public Valore getValore(){
         return valore;
     }
