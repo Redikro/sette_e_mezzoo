@@ -18,13 +18,6 @@ public class CPU implements ActionStrategy {
     }
     @Override
     public Action chooseAction(Giocatore giocatore) {
-        float punteggio = giocatore.getPunteggioCarte();
-
-        if(punteggio < 4)
-            return Action.PESCA;
-        else if(punteggio>=5)
-            return Action.PASSA;
-        else return Action.PESCA;
-
+        return giocatore.getPunteggioCarte() >= 5 ? Action.PASSA : Action.PESCA;
     }
 }
