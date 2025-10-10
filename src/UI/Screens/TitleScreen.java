@@ -14,7 +14,7 @@ public class TitleScreen implements Screen {
 
     public TitleScreen(MainFrame frame) {
         panel = new JPanel() {
-            private final Image bg = new ImageIcon("out/sfondo.png").getImage();
+            private final Image bg = new ImageIcon("out/immagini/background/sfondo.png").getImage();
 
             @Override
             protected void paintComponent(Graphics g) {
@@ -27,12 +27,12 @@ public class TitleScreen implements Screen {
 
         panel.setLayout(new BorderLayout());
 
-        // Titolo in alto
-        JLabel titolo = new JLabel(new ImageIcon("out/titolo2.png"));
+        // Titolo
+        JLabel titolo = new JLabel(new ImageIcon("out/immagini/background/titolo2.png"));
         titolo.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(titolo, BorderLayout.NORTH);
 
-        // Bottone in basso
+        // Nuova partita
         startButton = new JButton("NUOVA PARTITA");
         startButton.setFont(new Font("SansSerif", Font.BOLD, 20));
         startButton.setOpaque(false);

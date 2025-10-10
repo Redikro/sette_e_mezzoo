@@ -12,7 +12,7 @@ public class MainFrame extends JFrame {
         setTitle("Sette e Mezzo");
         setSize(1152, 768);
         try {
-            setIconImage(ImageIO.read(new File("out/titolo.png")));
+            setIconImage(ImageIO.read(new File("out/immagini/background/titolo.png")));
         }catch (IOException e) {
             throw new RuntimeException(e);
         }

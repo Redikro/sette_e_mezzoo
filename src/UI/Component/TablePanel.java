@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TablePanel extends JPanel {
-    private final Image bg = new ImageIcon("out/sfondo.png").getImage();
+    private final Image bg = new ImageIcon("out/immagini/background/sfondo.png").getImage();
 
     public TablePanel(GameManager gameManager) {
         setLayout(null);
@@ -27,17 +27,17 @@ public class TablePanel extends JPanel {
         int w = getWidth();
         int h = getHeight();
 
-        // Titolo
-        ImageIcon titoloImg = new ImageIcon("out/titolo.png");
+        // Titolo con immagine
+       /* ImageIcon titoloImg = new ImageIcon("out/immagini/background/titolo.png");
         JLabel titolo = new JLabel(titoloImg);
         titolo.setHorizontalAlignment(SwingConstants.CENTER);
 
-// Centra l'immagine nella parte alta del tavolo
         int imgW = titoloImg.getIconWidth();
         int imgH = titoloImg.getIconHeight();
         titolo.setBounds((w - imgW) / 2, h / 2 - 150, imgW, imgH);
 
-        add(titolo);
+        add(titolo);*/
+
 
         // Giocatori
         add(new PlayerArea("GIOCATORE"), w/2 - 100, h - 80);
