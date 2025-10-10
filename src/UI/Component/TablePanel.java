@@ -8,9 +8,31 @@ import java.awt.*;
 public class TablePanel extends JPanel {
     private final Image bg = new ImageIcon("out/immagini/background/sfondo.png").getImage();
 
-    public TablePanel(GameManager gameManager) {
+    private final CenterArea centerArea;
+    private final PlayerArea playerArea;
+    private final PlayerArea cpu1Area;
+    private final PlayerArea cpu2Area;
+    private final PlayerArea cpu3Area;
+
+    public TablePanel() {
         setLayout(null);
         setPreferredSize(new Dimension(1152, 768));
+
+        // Aree dei giocatori
+        playerArea = new PlayerArea("GIOCATORE");
+        cpu1Area = new PlayerArea("CPU 1");
+        cpu2Area = new PlayerArea("CPU 2");
+        cpu3Area = new PlayerArea("CPU 3");
+
+        // Area centrale
+        centerArea = new CenterArea();
+
+        // Posizionamento
+        addComponent(playerArea, 480, 680);
+        addComponent(cpu1Area, 480, 20);
+        addComponent(cpu2Area, 940, 340);
+        addComponent(cpu3Area, 40, 340);
+        addComponent(centerArea, 376, 250);
     }
 
     @Override
@@ -19,40 +41,28 @@ public class TablePanel extends JPanel {
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
 
-    @Override
-    public void doLayout() {
-        super.doLayout();
-        removeAll();
-
-        int w = getWidth();
-        int h = getHeight();
-
-        // Titolo con immagine
-       /* ImageIcon titoloImg = new ImageIcon("out/immagini/background/titolo.png");
-        JLabel titolo = new JLabel(titoloImg);
-        titolo.setHorizontalAlignment(SwingConstants.CENTER);
-
-        int imgW = titoloImg.getIconWidth();
-        int imgH = titoloImg.getIconHeight();
-        titolo.setBounds((w - imgW) / 2, h / 2 - 150, imgW, imgH);
-
-        add(titolo);*/
-
-
-        // Giocatori
-        add(new PlayerArea("GIOCATORE"), w/2 - 100, h - 80);
-        add(new PlayerArea("CPU 1"), w/2 - 100, 20);
-        add(new PlayerArea("CPU 2"), w - 200, h/2 - 40);
-        add(new PlayerArea("CPU 3"), 20, h/2 - 40);
-
-        // Area centrale (carte e mazzo)
-        CenterArea center = new CenterArea();
-        center.setBounds(w/2 - 200, h/2 - 80, 400, 250);
-        add(center);
-    }
-
-    private void add(JComponent comp, int x, int y) {
+    private void addComponent(JComponent comp, int x, int y) {
         comp.setBounds(x, y, comp.getPreferredSize().width, comp.getPreferredSize().height);
         add(comp);
+    }
+
+    public CenterArea getCenterArea() {
+        return centerArea;
+    }
+
+    public PlayerArea getPlayerArea() {
+        return playerArea;
+    }
+
+    public PlayerArea getCpu1Area() {
+        return cpu1Area;
+    }
+
+    public PlayerArea getCpu2Area() {
+        return cpu2Area;
+    }
+
+    public PlayerArea getCpu3Area() {
+        return cpu3Area;
     }
 }

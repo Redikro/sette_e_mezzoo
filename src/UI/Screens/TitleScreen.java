@@ -36,7 +36,7 @@ public class TitleScreen implements Screen {
         startButton = new JButton("NUOVA PARTITA");
         startButton.setFont(new Font("SansSerif", Font.BOLD, 20));
         startButton.setOpaque(false);
-        startButton.addActionListener(_ -> frame.setScreen(new GameScreen()));
+        startButton.addActionListener(_ -> frame.setScreen(new GameScreen(frame)));
 
         JPanel bottom = new JPanel();
         bottom.setOpaque(false);

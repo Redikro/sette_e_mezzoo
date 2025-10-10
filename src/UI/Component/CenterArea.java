@@ -30,8 +30,9 @@ public class CenterArea extends JPanel {
         mazzo.setBounds(150, 180, 200, 200);*/
 
         //Mazzo scalabile
-        ImageObject mazzo = new ImageObject("out/immagini/png_carte/retro.png", 90, 10);
+        ImageObject mazzo = new ImageObject("out/immagini/png_carte/retro.png", 80, 20);
         mazzo.setScale(0.30);
+
 
         // Gettone
         JLabel gettone = new JLabel(new ImageIcon("out/png_carte/gettone.png"));
