@@ -1,6 +1,6 @@
 package UI.Component;
 
-import UI.ImageObject;
+import UI.Panels.ImageObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,11 +25,11 @@ public class CenterArea extends JPanel {
         carta1.setBounds(100, 60, 80, 120);
         carta2.setBounds(200, 60, 80, 120);*/
 
-        // Mazzo con JLabeò
+        // UI.Mazzo con JLabeò
         /*JLabel mazzo = new JLabel(new ImageIcon("out/immagini/png_carte/retro.png"));
         mazzo.setBounds(150, 180, 200, 200);*/
 
-        //Mazzo scalabile
+        //UI.Mazzo scalabile
         ImageObject mazzo = new ImageObject("out/immagini/png_carte/retro.png", 80, 20);
         mazzo.setScale(0.30);
 

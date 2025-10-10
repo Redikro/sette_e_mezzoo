@@ -9,17 +9,27 @@ public class Giocatore implements TurnObserver {
     private final List<Carta> mano = new ArrayList<>();
     private int gettoni;
     private int puntata = 0;
-    private boolean mazziere = false;
+    private int punteggio = 0;
+    private final boolean mazziere;
 
-    public void setGettoni(int g){
-        this.gettoni = g;
+    public boolean isMazziere() {
+        return mazziere;
+    }
+
+    public void setPunteggio(int punteggio) {
+        this.punteggio = punteggio;
+    }
+
+    public int getPunteggio(){
+        return this.punteggio;
     }
 
     public int getGettoni() {
         return gettoni;
     }
 
-    public Giocatore(String nome,int gettoni) {
+    public Giocatore(String nome,int gettoni,boolean mazziere) {
+        this.mazziere = mazziere;
         this.nome = nome;
         this.gettoni = gettoni;
     }

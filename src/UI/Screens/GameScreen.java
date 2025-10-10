@@ -3,8 +3,11 @@ package UI.Screens;
 import javax.swing.*;
 
 import java.awt.*;
+
+import Observer.TurnManager;
 import UI.*;
 import UI.Component.*;
+import UI.Panels.PlayerControlsPanel;
 
 
 public class GameScreen implements Screen {
@@ -13,10 +16,11 @@ public class GameScreen implements Screen {
     private final PlayerControlsPanel controls;
     private final GameManager controller;
 
-    public GameScreen(MainFrame frame) {
+    public GameScreen(String nome,int gettoni) {
         panel = new JPanel(new BorderLayout());
-        table = new TablePanel();
-        controller = new GameManager(this);
+        controller = new GameManager(nome,20);
+        table = new TablePanel(controller);
+
         controls = new PlayerControlsPanel(controller);
 
         panel.add(table, BorderLayout.CENTER);
@@ -29,9 +33,8 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void onShow() {}
+    public void onShow() {
 
-    public TablePanel getTablePanel() {
-        return table;
     }
+
 }

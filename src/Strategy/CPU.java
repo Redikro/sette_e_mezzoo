@@ -1,7 +1,6 @@
 package Strategy;
 
 import Observer.Giocatore;
-import Observer.TurnManager;
 
 import java.util.ArrayList;
 

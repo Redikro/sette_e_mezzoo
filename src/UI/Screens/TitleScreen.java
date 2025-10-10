@@ -2,15 +2,12 @@ package UI.Screens;
 
 import UI.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+
 
 public class TitleScreen implements Screen {
     private final JPanel panel;
-    private final JButton startButton;
 
     public TitleScreen(MainFrame frame) {
         panel = new JPanel() {
@@ -33,15 +30,24 @@ public class TitleScreen implements Screen {
         panel.add(titolo, BorderLayout.NORTH);
 
         // Nuova partita
-        startButton = new JButton("NUOVA PARTITA");
-        startButton.setFont(new Font("SansSerif", Font.BOLD, 20));
+        JPanel bottom = getPanel(frame);
+        panel.add(bottom, BorderLayout.CENTER);
+    }
+
+    private JPanel getPanel(MainFrame frame) {
+        JButton startButton = new JButton("NUOVA PARTITA");
+        startButton.setFont(new Font("Comic Sans", Font.BOLD, 20));
         startButton.setOpaque(false);
-        startButton.addActionListener(_ -> frame.setScreen(new GameScreen(frame)));
+        startButton.addActionListener(_ -> {
+            String nome = JOptionPane.showInputDialog("Nome Giocatore");
+            int gettoni = Integer.parseInt(JOptionPane.showInputDialog("Inserisci Gettoni Giocatore"));
+            frame.setScreen(new GameScreen(nome,gettoni));
+        });
 
         JPanel bottom = new JPanel();
         bottom.setOpaque(false);
         bottom.add(startButton);
-        panel.add(bottom, BorderLayout.CENTER);
+        return bottom;
     }
 
     @Override

@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class Carta {
     private final Seme seme;
-    private final Valore valore; //da aggiungere immagine
+    private final Valore valore;
 
     public Carta(Seme seme, Valore valore) {
         this.seme = seme;
@@ -15,16 +15,8 @@ public class Carta {
     }
 
     // get seme e valore
-    public Seme getSeme(){
-        return seme;
-    }
-
     public float getRealVal(){
         return valore.getRealVal();
-    }
-
-    public Valore getValore(){
-        return valore;
     }
 
     @Override
