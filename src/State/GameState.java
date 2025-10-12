@@ -1,5 +1,6 @@
 package State;
 import Observer.Giocatore;
+import UI.GameManager;
 
 public interface GameState {
     void enterState();

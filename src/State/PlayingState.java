@@ -28,7 +28,6 @@ public class PlayingState implements GameState {
         if (context.getTurnManager().getIndex() == context.getTurnManager().getNumberOfPlayers()) {
             context.setState(new EvalState(context));
         }
-        context.getTurnManager().nextTurn();
     }
 
     @Override

@@ -38,7 +38,7 @@ public class PlayerArea extends JPanel implements TurnObserver {
         punteggiPanel.setOpaque(false);
         punteggiPanel.setLayout(new BoxLayout(punteggiPanel, BoxLayout.Y_AXIS));
 
-        punteggioTotale = new JLabel("Punteggio totale: " + giocatore.getPunteggio());
+        punteggioTotale = new JLabel("Punteggio totale: " + giocatore.getGettoni());
         punteggioTotale.setForeground(Color.YELLOW);
         punteggioMano = new JLabel("Punteggio carte: " + giocatore.getPunteggioCarte());
         punteggioMano.setForeground(Color.ORANGE);
@@ -85,7 +85,7 @@ public class PlayerArea extends JPanel implements TurnObserver {
     public void aggiornaDati() {
         puntata.setText("Puntata: " + giocatore.getPuntata());
         gettoni.setText("Gettoni: " + giocatore.getGettoni());
-        punteggioTotale.setText("Punteggio totale: " + giocatore.getPunteggio());
+        punteggioTotale.setText("Punteggio totale: " + giocatore.getGettoni());
         punteggioMano.setText("Punteggio carte: " + giocatore.getPunteggioCarte());
     }
 }

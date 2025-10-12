@@ -23,6 +23,24 @@ public class GameManager {
         turnManager.aggiungiGiocatore(new Giocatore("CPU3",gettoni,false));
     }
 
+    public Giocatore calcoloVincitore(Giocatore mazziere, Giocatore altro){
+        if (altro.isOut() || mazziere.getPunteggioCarte() >= altro.getPunteggioCarte()) {
+            mazziere.setGettoni(altro.getPuntata());
+            return mazziere;
+        }
+        else {
+            altro.setGettoni(mazziere.getPuntata());
+            return altro;
+        }
+    }
+    public Giocatore getMazziere(){
+        for (Giocatore g : turnManager.getGiocatori()){
+            if (g.isMazziere())
+                return g;
+        }
+        return null;
+    }
+
     public GameState getCurrentState() {
         return this.currentState;
     }
@@ -41,16 +59,24 @@ public class GameManager {
     }
 
     public void onPassa() {
-        System.out.println("Giocatore passa il turno");
+        currentState.onPassa(getTurnManager().getGiocatoreCorrente());
+        if (getTurnManager().getIndex() == 3){
+            nextState();
+            getTurnManager().resetIndex();
+        }
         turnManager.nextTurn();
+
+    }
+
+    private void nextState(){
+        if (currentState instanceof EvalState)
+            currentState = new PlayingState(this);
+        else {
+            currentState = new EvalState(this);
+        }
     }
 
     public void onPunta(Giocatore corrente) {
-        if (getCurrentState() instanceof PlayingState) {
             currentState.onPunta(corrente);
-        } else {
-            JOptionPane.showMessageDialog(null, "Non puoi puntare in questo momento");
-            JOptionPane.showMessageDialog(null, "Cambia nel costruttore di GameManager this.setState(new EvalState(this)) in this.setState(new PlayingState(this))");
-        }
     }
 }
