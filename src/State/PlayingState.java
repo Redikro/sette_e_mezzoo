@@ -33,7 +33,7 @@ public class PlayingState implements GameState {
 
     @Override
     public void onPunta(Giocatore giocatore) {
-        SpinnerNumberModel mod = new SpinnerNumberModel(1, 1, 20, 1);
+        SpinnerNumberModel mod = new SpinnerNumberModel(1, 1, giocatore.getGettoni(), 1);
         JSpinner spinner = new JSpinner(mod);
         int result = JOptionPane.showConfirmDialog(
                 null,
@@ -43,8 +43,8 @@ public class PlayingState implements GameState {
         );
         if (result == JOptionPane.OK_OPTION) {
             int puntata = (int) spinner.getValue();
-            giocatore.punta(puntata);
-            JOptionPane.showMessageDialog(null,"Gettoni sul tavolo: " + giocatore.getPuntata());
+            if (!giocatore.punta(puntata))
+                JOptionPane.showMessageDialog(null,"Non hai abbastanza gettoni");
         }
     }
 }

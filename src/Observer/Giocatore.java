@@ -46,8 +46,13 @@ public class Giocatore implements TurnObserver {
         return punteggio;
     }
 
-    public void punta(int puntata){
-        this.puntata += puntata;
+    public boolean punta(int puntata){
+        if (this.puntata + puntata <= this.getGettoni()) {
+            this.puntata += puntata;
+            this.gettoni -= puntata;
+            return true;
+        }
+        return false;
     }
 
     public int getPuntata(){
