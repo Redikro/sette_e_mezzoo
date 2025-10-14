@@ -25,11 +25,11 @@ public class CenterArea extends JPanel {
         carta1.setBounds(100, 60, 80, 120);
         carta2.setBounds(200, 60, 80, 120);*/
 
-        // UI.Mazzo con JLabeò
+        // Mazzo.Mazzo con JLabeò
         /*JLabel mazzo = new JLabel(new ImageIcon("out/immagini/png_carte/retro.png"));
         mazzo.setBounds(150, 180, 200, 200);*/
 
-        //UI.Mazzo scalabile
+        //Mazzo.Mazzo scalabile
         ImageObject mazzo = new ImageObject("out/immagini/png_carte/retro.png", 80, 20);
         mazzo.setScale(0.30);
 

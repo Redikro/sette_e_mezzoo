@@ -1,10 +1,9 @@
 package UI;
 
-import Observer.Giocatore;
-import Observer.TurnManager;
+import Mazzo.Mazzo;
+import Observer.*;
 import State.*;
-import Strategy.ActionStrategy;
-import Strategy.CPU;
+import Strategy.*;
 import UI.Screens.*;
 
 import javax.swing.*;
@@ -16,11 +15,12 @@ public class GameManager {
     private final ActionStrategy strategy = new CPU();
 
     public GameManager(String nome,int gettoni) {
-        this.setState(new PlayingState(this));
+        this.setState(new PlayingState());
         turnManager.aggiungiGiocatore(new Giocatore(nome,gettoni,true));
         turnManager.aggiungiGiocatore(new Giocatore("CPU1",gettoni,false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU2",gettoni,false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU3",gettoni,false));
+        Mazzo.getInstance().mischiaCarte();
     }
 
     public Giocatore calcoloVincitore(Giocatore mazziere, Giocatore altro){
@@ -41,10 +41,6 @@ public class GameManager {
         return null;
     }
 
-    public GameState getCurrentState() {
-        return this.currentState;
-    }
-
     public void setState(GameState state){
         this.currentState = state;
     }
@@ -54,29 +50,28 @@ public class GameManager {
     }
 
     public void onPesca() {
-        System.out.println("Giocatore pesca una carta");
-        // TODO: aggiungi logica pesca
+        currentState.onPesca(getTurnManager().getGiocatoreCorrente());
     }
 
     public void onPassa() {
         currentState.onPassa(getTurnManager().getGiocatoreCorrente());
-        if (getTurnManager().getIndex() == 3){
+        if (getTurnManager().getGiocatoreCorrente() == getTurnManager().getGiocatori().getLast()){
             nextState();
-            getTurnManager().resetIndex();
+            getTurnManager().resetTurni();
         }
-        turnManager.nextTurn();
-
+        else
+            turnManager.nextTurn();
     }
 
     private void nextState(){
         if (currentState instanceof EvalState)
-            currentState = new PlayingState(this);
+            currentState = new PlayingState();
         else {
             currentState = new EvalState(this);
         }
     }
 
     public void onPunta(Giocatore corrente) {
-            currentState.onPunta(corrente);
+        currentState.onPunta(corrente);
     }
 }

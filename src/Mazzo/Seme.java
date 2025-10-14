@@ -4,7 +4,7 @@ package Mazzo;
  * Seme della carta
  */
 public enum Seme {
-    DENARI, COPPE, SPADE, BASTONI, COPERTA;
+    DENARI, COPPE, SPADE, BASTONI;
 
     @Override
     public String toString() {
@@ -13,7 +13,6 @@ public enum Seme {
             case COPPE -> "coppe";
             case SPADE -> "spade";
             case BASTONI -> "bastoni";
-            case COPERTA -> "coperta";
         };
     }
 }

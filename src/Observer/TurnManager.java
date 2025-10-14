@@ -28,21 +28,16 @@ public class TurnManager implements TurnSubject {
         return this.index;
     }
 
-    public void resetIndex() {
-        this.index = 0;
-    }
-
     public void resetTurni() {
-        index = 0;                 // riparte dal primo giocatore
-        notifyObservers();         // aggiorna subito tutti gli osservatori
-        System.out.println("🔁 Turni resettati. Tocca a: " + getGiocatoreCorrente().getNome());
+        this.index = 0;
+        notifyObservers();
     }
 
     public void nextTurn() {
         if (giocatore.get(index).getNome().isEmpty()) {
             nextTurn();
         }
-            index = (index + 1) % observers.size();
+            index++;
             notifyObservers();
     }
 

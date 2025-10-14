@@ -1,34 +1,20 @@
 package State;
 
 import Observer.Giocatore;
-import UI.GameManager;
+import Mazzo.Mazzo;
 
 import javax.swing.*;
 
 public class PlayingState implements GameState {
-    private final GameManager context;
-
-    public PlayingState(GameManager context) {
-        this.context = context;
-    }
-
-    @Override
-    public void enterState() {
-        System.out.println("🪙 Fase di puntate iniziata!");
-        context.getTurnManager().resetTurni();
-    }
 
     @Override
     public void onPesca(Giocatore giocatore) {
-        System.out.println("❌ Non puoi pescare in fase di puntate!");
+        giocatore.addCarta(Mazzo.daiCarta());
+        System.out.println(giocatore.getMano());
     }
 
     @Override
-    public void onPassa(Giocatore giocatore) {
-        if (context.getTurnManager().getIndex() == context.getTurnManager().getNumberOfPlayers()) {
-            context.setState(new EvalState(context));
-        }
-    }
+    public void onPassa(Giocatore giocatore) {}
 
     @Override
     public void onPunta(Giocatore giocatore) {

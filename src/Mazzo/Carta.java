@@ -22,7 +22,7 @@ public class Carta {
     @Override
     public String toString()
     {
-        return valore.toString() + " " + seme.toString();
+        return seme.toString() +  valore.toString();
     }
 
     @Override

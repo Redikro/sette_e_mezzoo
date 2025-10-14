@@ -11,6 +11,10 @@ public class Giocatore implements TurnObserver {
     private int puntata = 0;
     private final boolean mazziere;
 
+    public void addCarta(Carta c) {
+        mano.add(c);
+    }
+
     public boolean isOut(){
         return this.getPunteggioCarte() > 7.5;
     }

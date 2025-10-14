@@ -23,8 +23,8 @@ public class PlayerControlsPanel extends JPanel {
         pescaBtn.addActionListener(_ -> controller.onPesca());
         passaBtn.addActionListener(_ -> controller.onPassa());
         puntaBtn.addActionListener(_ -> {
-            controller.onPunta(controller.getTurnManager().getGiocatoreCorrente());
-            controller.getTurnManager().notifyObservers();
+           controller.onPunta(controller.getTurnManager().getGiocatoreCorrente());
+           controller.getTurnManager().notifyObservers();
         });
         exitBtn.addActionListener(_ -> System.exit(0));
 
