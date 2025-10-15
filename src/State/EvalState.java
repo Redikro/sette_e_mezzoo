@@ -19,12 +19,15 @@ public class EvalState implements GameState {
 
     @Override
     public void onPassa(Giocatore giocatore) {
+        System.out.println(giocatore.getNome());
         if (giocatore.isMazziere())
             return;
         if (context.calcoloVincitore(context.getMazziere(),giocatore).isMazziere())
             JOptionPane.showMessageDialog(null, context.getMazziere().getNome() + " vince contro "+ giocatore.getNome());
         else
             JOptionPane.showMessageDialog(null, context.getMazziere().getNome() + " perde contro " + giocatore.getNome());
+
+        giocatore.svuotaMano();
     }
 
     @Override

@@ -6,11 +6,12 @@ import java.util.List;
 
 public class Giocatore implements TurnObserver {
     private final String nome;
-    private final List<Carta> mano = new ArrayList<>();
+    private List<Carta> mano = new ArrayList<>();
     private int gettoni;
     private int puntata = 0;
     private final boolean mazziere;
 
+    public void svuotaMano(){ mano = new ArrayList<>();}
     public void addCarta(Carta c) {
         mano.add(c);
     }
