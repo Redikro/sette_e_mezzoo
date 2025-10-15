@@ -1,14 +1,14 @@
 package Observer;
 
 import Mazzo.Carta;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Giocatore implements TurnObserver {
     private final String nome;
     private List<Carta> mano = new ArrayList<>();
-    private int gettoni;
-    private int puntata = 0;
+    private int gettoni, puntata = 0;
     private final boolean mazziere;
 
     public void svuotaMano(){
@@ -43,12 +43,35 @@ public class Giocatore implements TurnObserver {
         return mano;
     }
 
-    public float getPunteggioCarte(){
-        float punteggio = 0;
-        for(Carta c : mano){
+    private float getPunteggioNoMatta(){
+        float punteggio = 0F;
+        for (Carta c : getMano()){
+            if (c.isMatta())
+                continue;
             punteggio += c.getRealVal();
         }
         return punteggio;
+    }
+
+    public float getPunteggioCarte(){
+        float punteggio = getPunteggioNoMatta();
+        boolean haMatta = false;
+        for (Carta c : getMano()) {
+            if (c.isMatta()) {
+                haMatta = true;
+                break;
+            }
+        }
+        if (!haMatta) return punteggio;
+
+        float migliore = punteggio + 0.5F;
+        for (int i = 1; i <= 7; i++) {
+            float temp = punteggio + i;
+            if (temp <= 7.5F && temp > migliore) {
+                migliore = temp;
+            }
+        }
+        return migliore;
     }
 
     public boolean punta(int puntata){

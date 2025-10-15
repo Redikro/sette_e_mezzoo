@@ -15,7 +15,7 @@ public class GameManager {
     private final ActionStrategy strategy = new CPU();
 
     public GameManager(String nome,int gettoni) {
-        this.setState(new PlayingState());
+        this.setState(new PlayingState(this));
         turnManager.aggiungiGiocatore(new Giocatore(nome,gettoni,true));
         turnManager.aggiungiGiocatore(new Giocatore("CPU1",gettoni,false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU2",gettoni,false));
@@ -23,16 +23,43 @@ public class GameManager {
         Mazzo.getInstance().mischiaCarte();
     }
 
-    public Giocatore calcoloVincitore(Giocatore mazziere, Giocatore altro){
-        if (altro.isOut() || mazziere.getPunteggioCarte() >= altro.getPunteggioCarte()) {
+    public Giocatore calcoloVincitore(Giocatore mazziere, Giocatore altro) {
+        double punteggioMazziere = mazziere.getPunteggioCarte();
+        double punteggioAltro = altro.getPunteggioCarte();
+
+        boolean mazziereOut = mazziere.isOut();
+        boolean altroOut = altro.isOut();
+
+        // Caso 1: entrambi sballano → vince comunque il mazziere
+        if (mazziereOut && altroOut) {
             mazziere.setGettoni(altro.getPuntata());
             return mazziere;
         }
-        else {
+
+        // Caso 2: l'altro sballa → vince il mazziere
+        if (altroOut) {
+            mazziere.setGettoni(altro.getPuntata());
+            return mazziere;
+        }
+
+        // Caso 3: il mazziere sballa → vince l'altro
+        if (mazziereOut) {
+            altro.setGettoni(mazziere.getPuntata());
+            return altro;
+        }
+
+        // Caso 4: nessuno sballa → vince chi è più vicino a 7.5
+        if (punteggioMazziere >= punteggioAltro) {
+            mazziere.setGettoni(altro.getPuntata());
+            return mazziere;
+        } else {
             altro.setGettoni(mazziere.getPuntata());
             return altro;
         }
     }
+
+
+
     public Giocatore getMazziere(){
         for (Giocatore g : turnManager.getGiocatori()){
             if (g.isMazziere())
@@ -65,7 +92,7 @@ public class GameManager {
 
     private void nextState(){
         if (currentState instanceof EvalState)
-            currentState = new PlayingState();
+            currentState = new PlayingState(this);
         else {
             currentState = new EvalState(this);
         }

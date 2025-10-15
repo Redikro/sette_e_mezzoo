@@ -14,6 +14,10 @@ public class Carta {
         this.valore = valore;
     }
 
+    public boolean isMatta(){
+        return this.seme.equals(Seme.DENARI) && this.valore.equals(Valore.RE);
+    }
+
     // get seme e valore
     public float getRealVal(){
         return valore.getRealVal();
