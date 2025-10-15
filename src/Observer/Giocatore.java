@@ -11,7 +11,9 @@ public class Giocatore implements TurnObserver {
     private int puntata = 0;
     private final boolean mazziere;
 
-    public void svuotaMano(){ mano = new ArrayList<>();}
+    public void svuotaMano(){
+        mano = new ArrayList<>();
+    }
     public void addCarta(Carta c) {
         mano.add(c);
     }
