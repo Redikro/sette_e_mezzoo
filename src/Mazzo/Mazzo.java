@@ -10,7 +10,7 @@ import java.util.List;
 public class Mazzo {
     private static Mazzo instance;
     private static final List<Carta> original = CardFactory.createNapoletaneDeck();
-    private static List<Carta> mazzo = CardFactory.createNapoletaneDeck();
+    private static final List<Carta> mazzo = CardFactory.createNapoletaneDeck();
 
     /**
      * @return il mazzo corrente
@@ -40,6 +40,7 @@ public class Mazzo {
         catch (MazzoFinito e){
             JOptionPane.showMessageDialog(null,"Mazzo finito. Rimescolamento in corso");
             getInstance().resettaMazzo();
+            System.out.println(mazzo);
             getInstance().mischiaCarte();
             return daiCarta();
         }
@@ -56,7 +57,8 @@ public class Mazzo {
      * Ripristina mazzo originale
      */
     public void resettaMazzo(){
-        mazzo = original;
+        for (Carta carta : original)
+            mazzo.add(carta);
     }
 
     /**
