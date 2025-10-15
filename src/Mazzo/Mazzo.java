@@ -1,5 +1,4 @@
 package Mazzo;
-
 import Factory_method.CardFactory;
 
 import javax.swing.*;
@@ -7,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Mazzo {
     private static Mazzo instance;
     private static final List<Carta> original = CardFactory.createNapoletaneDeck();
@@ -57,8 +57,7 @@ public class Mazzo {
      * Ripristina mazzo originale
      */
     public void resettaMazzo(){
-        for (Carta carta : original)
-            mazzo.add(carta);
+        mazzo.addAll(original);
     }
 
     /**
