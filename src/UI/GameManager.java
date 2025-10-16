@@ -22,42 +22,62 @@ public class GameManager {
         turnManager.aggiungiGiocatore(new Giocatore("CPU3",gettoni,false));
         Mazzo.getInstance().mischiaCarte();
     }
+    
+    public void calcoloVincitore() {
+        JOptionPane.showMessageDialog(null, "Calcolo vincitori");
+        StringBuilder text = new StringBuilder();
+        Giocatore mazziere = getMazziere();
 
-    public Giocatore calcoloVincitore(Giocatore mazziere, Giocatore altro) {
-        double punteggioMazziere = mazziere.getPunteggioCarte();
-        double punteggioAltro = altro.getPunteggioCarte();
+        for (Giocatore giocatore : getTurnManager().getGiocatoriNoMazziere()) {
+            float punteggioMazziere = mazziere.getPunteggioCarte();
+            float punteggioAltro = giocatore.getPunteggioCarte();
+            boolean mazziereOut = mazziere.isOut();
+            boolean altroOut = giocatore.isOut();
 
-        boolean mazziereOut = mazziere.isOut();
-        boolean altroOut = altro.isOut();
-
-        // Caso 1: entrambi sballano → vince comunque il mazziere
-        if (mazziereOut && altroOut) {
-            mazziere.setGettoni(altro.getPuntata());
-            return mazziere;
+            if (mazziereOut && altroOut) {
+                text.append(mazziere.getNome())
+                        .append(" vince contro ")
+                        .append(giocatore.getNome())
+                        .append(" (entrambi sballano)\n");
+            }
+            else if (altroOut) {
+                text.append(mazziere.getNome())
+                        .append(" vince contro ")
+                        .append(giocatore.getNome())
+                        .append(" (")
+                        .append(giocatore.getNome())
+                        .append(" ha sballato)\n");
+            }
+            else if (mazziereOut) {
+                text.append(mazziere.getNome())
+                        .append(" perde contro ")
+                        .append(giocatore.getNome())
+                        .append(" (mazziere ha sballato)\n");
+            }
+            else if (punteggioMazziere >= punteggioAltro) {
+                text.append(mazziere.getNome())
+                        .append(" vince contro ")
+                        .append(giocatore.getNome())
+                        .append(" (")
+                        .append(punteggioMazziere)
+                        .append(" vs ")
+                        .append(punteggioAltro)
+                        .append(")\n");
+            }
+            else {
+                text.append(mazziere.getNome())
+                        .append(" perde contro ")
+                        .append(giocatore.getNome())
+                        .append(" (")
+                        .append(punteggioMazziere)
+                        .append(" vs ")
+                        .append(punteggioAltro)
+                        .append(")\n");
+            }
         }
 
-        // Caso 2: l'altro sballa → vince il mazziere
-        if (altroOut) {
-            mazziere.setGettoni(altro.getPuntata());
-            return mazziere;
-        }
-
-        // Caso 3: il mazziere sballa → vince l'altro
-        if (mazziereOut) {
-            altro.setGettoni(mazziere.getPuntata());
-            return altro;
-        }
-
-        // Caso 4: nessuno sballa → vince chi è più vicino a 7.5
-        if (punteggioMazziere >= punteggioAltro) {
-            mazziere.setGettoni(altro.getPuntata());
-            return mazziere;
-        } else {
-            altro.setGettoni(mazziere.getPuntata());
-            return altro;
-        }
+        JOptionPane.showMessageDialog(null, text.toString());
     }
-
 
 
     public Giocatore getMazziere(){
@@ -77,28 +97,40 @@ public class GameManager {
     }
 
     public void onPesca() {
-        currentState.onPesca(getTurnManager().getGiocatoreCorrente());
+        Giocatore giocatore = getTurnManager().getGiocatoreCorrente();
+        if (!giocatore.isOut())
+            giocatore.addCarta(Mazzo.daiCarta());
+        else
+            JOptionPane.showMessageDialog(null,giocatore.getNome() + " ha sballato");
+        this.getTurnManager().notifyObservers();
+        System.out.println(giocatore.getMano());
     }
 
     public void onPassa() {
-        currentState.onPassa(getTurnManager().getGiocatoreCorrente());
-        if (getTurnManager().getGiocatoreCorrente() == getTurnManager().getGiocatori().getLast()){
-            nextState();
+        try {
+            getTurnManager().nextTurn();
+        }
+        catch (IndexOutOfBoundsException e) {
             getTurnManager().resetTurni();
-        }
-        else
-            turnManager.nextTurn();
-    }
-
-    private void nextState(){
-        if (currentState instanceof EvalState)
-            currentState = new PlayingState(this);
-        else {
-            currentState = new EvalState(this);
+            calcoloVincitore();
         }
     }
 
-    public void onPunta(Giocatore corrente) {
-        currentState.onPunta(corrente);
+    public void onPunta() {
+        Giocatore giocatore = getTurnManager().getGiocatoreCorrente();
+        SpinnerNumberModel mod = new SpinnerNumberModel(1, 1, giocatore.getGettoni(), 1);
+        JSpinner spinner = new JSpinner(mod);
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                spinner,
+                giocatore.getNome() + ": Inserisci numero di gettoni da puntare",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+        if (result == JOptionPane.OK_OPTION) {
+            int puntata = (int) spinner.getValue();
+            if (!giocatore.punta(puntata))
+                JOptionPane.showMessageDialog(null,"Non hai abbastanza gettoni");
+        }
+        this.getTurnManager().notifyObservers();
     }
 }

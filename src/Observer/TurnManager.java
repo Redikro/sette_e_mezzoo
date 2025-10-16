@@ -45,6 +45,14 @@ public class TurnManager implements TurnSubject {
         return this.giocatore;
     }
 
+    public List<Giocatore> getGiocatoriNoMazziere(){
+        List<Giocatore> giocatoreNoMazziere = new ArrayList<>();
+        for (Giocatore giocatore : getGiocatori())
+            if (!giocatore.isMazziere())
+                giocatoreNoMazziere.add(giocatore);
+        return giocatoreNoMazziere;
+    }
+
     public Giocatore getGiocatoreCorrente() {
         return giocatore.get(index);
     }
