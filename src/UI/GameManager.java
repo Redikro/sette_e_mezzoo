@@ -2,7 +2,6 @@ package UI;
 
 import Mazzo.Mazzo;
 import Observer.*;
-import State.*;
 import Strategy.*;
 import UI.Screens.*;
 
@@ -10,19 +9,17 @@ import javax.swing.*;
 
 public class GameManager {
 
-    private GameState currentState;
     private final TurnManager turnManager = new TurnManager();
     private final ActionStrategy strategy = new CPU();
 
     public GameManager(String nome,int gettoni) {
-        this.setState(new PlayingState(this));
         turnManager.aggiungiGiocatore(new Giocatore(nome,gettoni,true));
         turnManager.aggiungiGiocatore(new Giocatore("CPU1",gettoni,false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU2",gettoni,false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU3",gettoni,false));
         Mazzo.getInstance().mischiaCarte();
     }
-    
+
     public void calcoloVincitore() {
         JOptionPane.showMessageDialog(null, "Calcolo vincitori");
         StringBuilder text = new StringBuilder();
@@ -88,8 +85,12 @@ public class GameManager {
         return null;
     }
 
-    public void setState(GameState state){
-        this.currentState = state;
+
+    public void resettaMano(){
+        for (Giocatore g : turnManager.getGiocatori()){
+            g.svuotaMano();
+        }
+
     }
 
     public TurnManager getTurnManager(){
@@ -113,6 +114,8 @@ public class GameManager {
         catch (IndexOutOfBoundsException e) {
             getTurnManager().resetTurni();
             calcoloVincitore();
+            resettaMano();
+            getTurnManager().notifyObservers();
         }
     }
 

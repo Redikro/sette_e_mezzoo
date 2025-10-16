@@ -40,7 +40,12 @@ public class TitleScreen implements Screen {
         startButton.setOpaque(false);
         startButton.addActionListener(_ -> {
             String nome = JOptionPane.showInputDialog("Nome Giocatore");
-            int gettoni = Integer.parseInt(JOptionPane.showInputDialog("Inserisci Gettoni Giocatore"));
+            if(nome == null || nome.equals("")) {nome = "🚘";}
+            String g = "";
+            while (g.isEmpty()) {
+                g = JOptionPane.showInputDialog("Inserisci Gettoni Giocatore");
+            }
+            int gettoni = Integer.parseInt(g);
             frame.setScreen(new GameScreen(nome,gettoni));
         });
 

@@ -12,6 +12,7 @@ public class PlayerArea extends JPanel implements TurnObserver {
     private final JLabel punteggioMano,gettoni,puntata;
     private final JPanel centro = new JPanel(new BorderLayout());
     private JLabel cartaLabel;
+    private ImageObject immagineCarta = getPlaceholder();
 
     public PlayerArea(Giocatore giocatore) {
         this.giocatore = giocatore;
@@ -38,7 +39,6 @@ public class PlayerArea extends JPanel implements TurnObserver {
         punteggiPanel.setOpaque(false);
         punteggiPanel.setLayout(new BoxLayout(punteggiPanel, BoxLayout.Y_AXIS));
 
-        ImageObject immagineCarta = new ImageObject("out/immagini/png_carte/placeholder.png", 80, 110);
         immagineCarta.setPreferredSize(new Dimension(80, 110));
         immagineCarta.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
         centro.add(immagineCarta, BorderLayout.WEST);
@@ -90,7 +90,13 @@ public class PlayerArea extends JPanel implements TurnObserver {
         gettoni.setText("Gettoni: " + giocatore.getGettoni());
         punteggioMano.setText("Punteggio carte: " + giocatore.getPunteggioCarte());
         aggiungiCarta(giocatore);
+
     }
+
+    public ImageObject getPlaceholder() {
+        return new ImageObject("out/immagini/png_carte/placeholder.png",80,110);
+    }
+
     public void aggiungiCarta(Giocatore giocatore) {
         try {
             var mano = giocatore.getMano();
@@ -109,4 +115,5 @@ public class PlayerArea extends JPanel implements TurnObserver {
             System.out.println("Errore nel caricamento immagine: " + e.getClass().getName() + " - " + e.getMessage());
         }
     }
+
 }
