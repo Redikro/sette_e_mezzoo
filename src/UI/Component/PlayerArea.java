@@ -2,13 +2,16 @@ package UI.Component;
 
 import Observer.Giocatore;
 import Observer.TurnObserver;
+import UI.Panels.ImageObject;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PlayerArea extends JPanel implements TurnObserver {
     private final Giocatore giocatore;
-    private final JLabel punteggioTotale,punteggioMano,gettoni,puntata;
+    private final JLabel punteggioMano,gettoni,puntata;
+    private final JPanel centro = new JPanel(new BorderLayout());
+    private JLabel cartaLabel;
 
     public PlayerArea(Giocatore giocatore) {
         this.giocatore = giocatore;
@@ -25,28 +28,29 @@ public class PlayerArea extends JPanel implements TurnObserver {
         add(nomeGiocatore, BorderLayout.NORTH);
 
         // --- centro: carta + punteggi
-        JPanel centro = new JPanel(new BorderLayout());
         centro.setOpaque(false);
 
-        // usa ImageObject se vuoi
-        JLabel immagineCarta = new JLabel(new ImageIcon("out/immagini/png_carte/bastoni1.png"));
-        immagineCarta.setPreferredSize(new Dimension(80, 110));
-        immagineCarta.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        centro.add(immagineCarta, BorderLayout.WEST);
+        cartaLabel = new JLabel();
+        cartaLabel.setPreferredSize(new Dimension(80, 110));
+        centro.add(cartaLabel, BorderLayout.WEST);
 
         JPanel punteggiPanel = new JPanel();
         punteggiPanel.setOpaque(false);
         punteggiPanel.setLayout(new BoxLayout(punteggiPanel, BoxLayout.Y_AXIS));
 
-        punteggioTotale = new JLabel("Punteggio totale: " + giocatore.getGettoni());
-        punteggioTotale.setForeground(Color.YELLOW);
+        ImageObject immagineCarta = new ImageObject("out/immagini/png_carte/placeholder.png", 80, 110);
+        immagineCarta.setPreferredSize(new Dimension(80, 110));
+        immagineCarta.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
+        centro.add(immagineCarta, BorderLayout.WEST);
+        immagineCarta.setScale(0.45);
+
+
         punteggioMano = new JLabel("Punteggio carte: " + giocatore.getPunteggioCarte());
         punteggioMano.setForeground(Color.ORANGE);
         puntata = new JLabel("Puntata corrente: " + giocatore.getPuntata());
         puntata.setForeground(Color.ORANGE);
 
 
-        punteggiPanel.add(punteggioTotale);
         punteggiPanel.add(Box.createVerticalStrut(5));
         punteggiPanel.add(punteggioMano);
         punteggiPanel.add(Box.createVerticalStrut(5));
@@ -77,7 +81,6 @@ public class PlayerArea extends JPanel implements TurnObserver {
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         }
 
-        // aggiorna i valori visivi del giocatore
         aggiornaDati();
         repaint();
     }
@@ -85,7 +88,25 @@ public class PlayerArea extends JPanel implements TurnObserver {
     public void aggiornaDati() {
         puntata.setText("Puntata: " + giocatore.getPuntata());
         gettoni.setText("Gettoni: " + giocatore.getGettoni());
-        punteggioTotale.setText("Punteggio totale: " + giocatore.getGettoni());
         punteggioMano.setText("Punteggio carte: " + giocatore.getPunteggioCarte());
+        aggiungiCarta(giocatore);
+    }
+    public void aggiungiCarta(Giocatore giocatore) {
+        try {
+            var mano = giocatore.getMano();
+            if (mano == null || mano.isEmpty()) {
+                return;
+            }
+            centro.remove(cartaLabel);
+            ImageObject immagineCarta = new ImageObject("out/immagini/png_carte/" + giocatore.getMano().getLast().toString() + ".png", 80, 110);
+            cartaLabel = immagineCarta;
+            centro.add(immagineCarta, BorderLayout.WEST);
+            immagineCarta.setScale(0.45);
+            centro.revalidate();
+            centro.repaint();
+        }
+        catch (Exception e) {
+            System.out.println("Errore nel caricamento immagine: " + e.getClass().getName() + " - " + e.getMessage());
+        }
     }
 }
