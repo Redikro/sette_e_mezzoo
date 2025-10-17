@@ -46,11 +46,10 @@ public class Mazzo {
         }
     }
 
-    /**
-     * @return il mazzo originale
-     */
-    public List<Carta> getOriginal() {
-        return original;
+
+    public void setCarte(List <Carta> carte){
+        mazzo.clear();
+        mazzo.addAll(carte);
     }
 
     /**

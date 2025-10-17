@@ -1,11 +1,15 @@
 package Mazzo;
 
 import javax.swing.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * Una carta ha un seme e un valore
  */
-public class Carta {
+public class Carta implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Seme seme;
     private final Valore valore;
 

@@ -1,12 +1,14 @@
 package UI;
 
 import Mazzo.Mazzo;
+import Memento.*;
 import Observer.*;
 import Strategy.*;
 import UI.Screens.*;
 import Strategy.Action;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Objects;
 
 public class GameManager {
@@ -14,15 +16,23 @@ public class GameManager {
     private final TurnManager turnManager = new TurnManager();
     private ActionStrategy strategy;
     private final Object cpuLock = new Object();
+    private final GameOriginator originator = new GameOriginator();
+    private final Caretaker caretaker = new Caretaker();
 
     public GameManager(String nome, int gettoni,String difficolta) {
-        turnManager.aggiungiGiocatore(new Giocatore(nome, gettoni, true,difficolta)); // mazziere umano
-        turnManager.aggiungiGiocatore(new Giocatore("CPU1", gettoni, false,difficolta));
-        turnManager.aggiungiGiocatore(new Giocatore("CPU2", gettoni, false,difficolta));
-        turnManager.aggiungiGiocatore(new Giocatore("CPU3", gettoni, false,difficolta));
+        turnManager.aggiungiGiocatore(new Giocatore(nome, gettoni, true)); // mazziere umano
+        turnManager.aggiungiGiocatore(new Giocatore("CPU1", gettoni, false));
+        turnManager.aggiungiGiocatore(new Giocatore("CPU2", gettoni, false));
+        turnManager.aggiungiGiocatore(new Giocatore("CPU3", gettoni, false));
         Mazzo.getInstance().mischiaCarte();
         setStrategy(difficolta);
     }
+
+    public GameManager(File file) {
+        caricaDaFile(file);
+    }
+
+
 
     public void calcoloVincitore() {
         JOptionPane.showMessageDialog(null, "Calcolo vincitori");
@@ -79,6 +89,7 @@ public class GameManager {
         }
 
         JOptionPane.showMessageDialog(null, text.toString());
+        salvaSuFile();
     }
 
     public Giocatore getMazziere() {
@@ -119,6 +130,8 @@ public class GameManager {
             getTurnManager().resetTurni();
             calcoloVincitore();
             resettaMano();
+            salvaStato();
+            System.out.println("Stato salvato");
             getTurnManager().notifyObservers();
         }
     }
@@ -196,6 +209,49 @@ public class GameManager {
                 }
               }
             }).start();
+        }
+    }
+    public void salvaStato() {
+        GameData data = new GameData(turnManager.getGiocatori(), Mazzo.getInstance().getRemainingCardsSnapshot());
+        System.out.println(data);
+        originator.setState(data);
+        caretaker.addMemento(originator.saveStateToMemento());
+    }
+
+    public void salvaSuFile() {
+        try {
+            GameData data = new GameData(turnManager.getGiocatori(), Mazzo.getInstance().getRemainingCardsSnapshot());
+            originator.setState(data);
+            GameMemento memento = originator.saveStateToMemento();
+
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Salva stato partita");
+            int userSelection = chooser.showSaveDialog(null);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                FileManager.salvaSuFile(memento, file);
+                JOptionPane.showMessageDialog(null, "Partita salvata in:\n" + file.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore durante il salvataggio: " + e.getMessage());
+        }
+    }
+
+    public void caricaDaFile(File file) {
+        try {
+
+                GameMemento loaded = FileManager.caricaDaFile(file);
+                originator.restoreFrom(loaded);
+
+                GameData restored = originator.getGameData();
+                turnManager.setGiocatori(restored.getGiocatore());
+                Mazzo.getInstance().setCarte(restored.getMazzo());
+
+                JOptionPane.showMessageDialog(null, "Partita caricata da:\n" + file.getAbsolutePath());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore durante il caricamento: " + e.getMessage());
         }
     }
 }

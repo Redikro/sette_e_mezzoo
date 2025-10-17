@@ -2,15 +2,28 @@ package Observer;
 
 import Mazzo.Carta;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Giocatore implements TurnObserver {
+public class Giocatore implements TurnObserver, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String nome;
     private List<Carta> mano = new ArrayList<>();
     private int gettoni, puntata = 0;
     private final boolean mazziere;
     private boolean puntato = false;
+
+    public Giocatore(Giocatore giocatore) {
+        this.nome = giocatore.nome;
+        this.mano = giocatore.mano;
+        this.mazziere = giocatore.mazziere;
+        this.puntata = giocatore.puntata;
+        this.gettoni = giocatore.gettoni;
+        this.puntato = giocatore.puntato;
+    }
 
     public boolean haPuntato(){
         return this.puntato;
@@ -46,7 +59,7 @@ public class Giocatore implements TurnObserver {
         return gettoni;
     }
 
-    public Giocatore(String nome,int gettoni,boolean mazziere,String modalita) {
+    public Giocatore(String nome,int gettoni,boolean mazziere) {
         this.mazziere = mazziere;
         this.nome = nome;
         this.gettoni = gettoni;

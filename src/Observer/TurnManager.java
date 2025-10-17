@@ -14,6 +14,11 @@ public class TurnManager implements TurnSubject {
         addObserver(giocatore);
     }
 
+    public void setGiocatori(List<Giocatore> giocatore) {
+        this.giocatore.clear();
+        this.giocatore.addAll(giocatore);
+    }
+
     public void resetTurni() {
         this.index = 0;
         notifyObservers();

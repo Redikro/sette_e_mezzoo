@@ -1,10 +1,10 @@
 package UI.Screens;
 
-import Strategy.ActionStrategy;
 import UI.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 
 public class TitleScreen implements Screen {
@@ -37,8 +37,11 @@ public class TitleScreen implements Screen {
 
     private JPanel getPanel(MainFrame frame) {
         JButton startButton = new JButton("NUOVA PARTITA");
-        startButton.setFont(new Font("Comic Sans", Font.BOLD, 20));
+        JButton loadButton = new JButton("CARICA PARTITA");
+        loadButton.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        startButton.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         startButton.setOpaque(false);
+        loadButton.setOpaque(false);
         startButton.addActionListener(_ -> {
             String nome = JOptionPane.showInputDialog("Nome Giocatore");
             if(nome == null || nome.isEmpty()) {nome = "🚘";}
@@ -56,9 +59,21 @@ public class TitleScreen implements Screen {
             frame.setScreen(new GameScreen(nome,gettoni,strategy));
         });
 
+        loadButton.addActionListener(_ -> {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Carica stato partita");
+            int userSelection = chooser.showOpenDialog(null);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+
+                File file = chooser.getSelectedFile();
+                frame.setScreen(new GameScreen(file));
+            }
+        });
+
         JPanel bottom = new JPanel();
         bottom.setOpaque(false);
         bottom.add(startButton);
+        bottom.add(loadButton);
         return bottom;
     }
 
