@@ -63,8 +63,11 @@ public class PlayerArea extends JPanel implements TurnObserver {
         JPanel info = new JPanel(new GridLayout(1, 2));
         gettoni = new JLabel("Gettoni: " + giocatore.getGettoni(), SwingConstants.CENTER);
         info.setOpaque(false);
+        gettoni.setForeground(Color.ORANGE);
         info.add(gettoni);
-        info.add(new JLabel("Mazziere: " + (giocatore.isMazziere() ? "Sì" : "No"), SwingConstants.CENTER));
+        JLabel mazziere = new JLabel("Mazziere: " + (giocatore.isMazziere() ? "Sì" : "No"), SwingConstants.CENTER);
+        mazziere.setForeground(Color.ORANGE);
+        info.add(mazziere);
         add(info, BorderLayout.SOUTH);
     }
 

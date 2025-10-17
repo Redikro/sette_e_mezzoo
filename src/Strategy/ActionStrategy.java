@@ -1,10 +1,10 @@
 package Strategy;
 
 import Observer.Giocatore;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ActionStrategy {
 
-    int puntaGettoni(Giocatore giocatore,ArrayList<Giocatore> giocatori);
+    int puntaGettoni(Giocatore giocatore,List<Giocatore> giocatori);
     Action chooseAction(Giocatore giocatore);
 }
