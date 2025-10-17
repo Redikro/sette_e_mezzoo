@@ -4,12 +4,6 @@ package Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *  Da ora in poi usare solamente istanza in GameManager.
- *  Mai crearne una nuova.
- *  Se trovate eccezioni outofbounds al 99% avete creato e richiamato una istanza diversa.
- *  ex. GameManager.getTurnManager() restituisce istanza in uso di questa classe
- */
 public class TurnManager implements TurnSubject {
     private final List<TurnObserver> observers = new ArrayList<>(4);
     private final List<Giocatore> giocatore = new ArrayList<>(4);
@@ -18,14 +12,6 @@ public class TurnManager implements TurnSubject {
     public void aggiungiGiocatore(Giocatore giocatore) {
         this.giocatore.add(giocatore);
         addObserver(giocatore);
-    }
-
-    public int getNumberOfPlayers(){
-        return giocatore.size();
-    }
-
-    public int getIndex() {
-        return this.index;
     }
 
     public void resetTurni() {

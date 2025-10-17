@@ -110,6 +110,7 @@ public class GameManager {
 
     public void onPassa() {
         try {
+            getTurnManager().getGiocatoreCorrente().setPuntato(false);
             getTurnManager().nextTurn();
             eseguiTurnoCPU();
         } catch (IndexOutOfBoundsException e) {
@@ -154,9 +155,13 @@ public class GameManager {
                         Thread.currentThread().interrupt();
                         return;
                     }
+
+                    System.out.println(corrente.getNome() + " ha puntato " +  corrente.haPuntato());
                     if (!corrente.haPuntato()) {
+                        System.out.println(corrente.getNome() + "Sto puntando...");
                         corrente.punta(strategy.puntaGettoni(corrente, getTurnManager().getGiocatori()));
                         corrente.setPuntato(true);
+
                     }
                 Action action = strategy.chooseAction(corrente);
                 System.out.println(corrente.getNome() + " sceglie " + action);
@@ -172,6 +177,7 @@ public class GameManager {
                     }
                     case PASSA -> {
                         corrente.setPuntato(false);
+                        System.out.println(corrente.getNome() + "Ho finito il turno ho puntato = " +  corrente.haPuntato());
                         onPassa();
                     }
                 }

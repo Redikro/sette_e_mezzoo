@@ -13,10 +13,13 @@ public class CPU implements ActionStrategy {
             Giocatore g = giocatori.get(i);
             somma += g.getPuntata();
         }
-        return somma == 0 ? 3 : somma/indexCPU;
+        int media = somma / indexCPU;
+
+
+        return Math.min(Math.max(media, 1), cpu.getGettoni());
     }
     @Override
     public Action chooseAction(Giocatore giocatore) {
-        return giocatore.getPunteggioCarte() >= 5 ? Action.PASSA : Action.PESCA;
+        return giocatore.getPunteggioCarte() >= 5.5 ? Action.PASSA : Action.PESCA;
     }
 }
