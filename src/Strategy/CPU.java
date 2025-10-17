@@ -8,6 +8,7 @@ public class CPU implements ActionStrategy {
 
     @Override
     public int puntaGettoni(Giocatore cpu, List<Giocatore> giocatori){
+        System.out.println("puntata normale");
         int somma = 0, indexCPU = giocatori.indexOf(cpu);
         for(int i = 0; i < indexCPU; i++){
             Giocatore g = giocatori.get(i);
@@ -20,6 +21,7 @@ public class CPU implements ActionStrategy {
     }
     @Override
     public Action chooseAction(Giocatore giocatore) {
+        System.out.println("modalita' normale");
         return giocatore.getPunteggioCarte() >= 5.5 ? Action.PASSA : Action.PESCA;
     }
 }

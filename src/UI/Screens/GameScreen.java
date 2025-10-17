@@ -12,9 +12,9 @@ import UI.Panels.TablePanel;
 public class GameScreen implements Screen {
     private final JPanel panel;
 
-    public GameScreen(String nome,int gettoni) {
+    public GameScreen(String nome,int gettoni,String strategy) {
         panel = new JPanel(new BorderLayout());
-        GameManager controller = new GameManager(nome, gettoni);
+        GameManager controller = new GameManager(nome, gettoni, strategy);
         TablePanel table = new TablePanel(controller);
 
         PlayerControlsPanel controls = new PlayerControlsPanel(controller);

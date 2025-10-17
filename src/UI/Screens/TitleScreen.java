@@ -1,5 +1,6 @@
 package UI.Screens;
 
+import Strategy.ActionStrategy;
 import UI.*;
 
 import javax.swing.*;
@@ -46,7 +47,13 @@ public class TitleScreen implements Screen {
                 g = JOptionPane.showInputDialog("Inserisci Gettoni Giocatore");
             }
             int gettoni = Integer.parseInt(g);
-            frame.setScreen(new GameScreen(nome,gettoni));
+            String[] opzioni = {"Normale","Difficile"};
+            JComboBox<String> comboBox = new JComboBox<>(opzioni);
+            int result = JOptionPane.showConfirmDialog(null,comboBox,"Seleziona difficoltá CPU",JOptionPane.OK_CANCEL_OPTION);
+            String strategy = "";
+            if(result == JOptionPane.OK_OPTION)
+                strategy = (String)comboBox.getSelectedItem();
+            frame.setScreen(new GameScreen(nome,gettoni,strategy));
         });
 
         JPanel bottom = new JPanel();

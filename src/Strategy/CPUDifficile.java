@@ -7,13 +7,14 @@ public class CPUDifficile implements ActionStrategy {
 
     @Override
     public int puntaGettoni(Giocatore cpu, List<Giocatore> giocatori) {
-        // Punta in modo più aggressivo: proporzionale al punteggio attuale
+        System.out.println("puntata difficile");
         int base = (int) (cpu.getPunteggioCarte() * 2);
         return Math.min(cpu.getGettoni(), Math.max(3, base));
     }
 
     @Override
     public Action chooseAction(Giocatore giocatore) {
+        System.out.println("modalita' difficile");
         float punteggio = giocatore.getPunteggioCarte();
         float distanza = 7.5f - punteggio;
 

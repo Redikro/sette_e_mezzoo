@@ -46,7 +46,7 @@ public class Giocatore implements TurnObserver {
         return gettoni;
     }
 
-    public Giocatore(String nome,int gettoni,boolean mazziere) {
+    public Giocatore(String nome,int gettoni,boolean mazziere,String modalita) {
         this.mazziere = mazziere;
         this.nome = nome;
         this.gettoni = gettoni;

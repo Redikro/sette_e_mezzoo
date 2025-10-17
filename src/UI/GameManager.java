@@ -7,19 +7,21 @@ import UI.Screens.*;
 import Strategy.Action;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class GameManager {
 
     private final TurnManager turnManager = new TurnManager();
-    private final ActionStrategy strategy = new CPU();
+    private ActionStrategy strategy;
     private final Object cpuLock = new Object();
 
-    public GameManager(String nome, int gettoni) {
-        turnManager.aggiungiGiocatore(new Giocatore(nome, gettoni, true)); // mazziere umano
-        turnManager.aggiungiGiocatore(new Giocatore("CPU1", gettoni, false));
-        turnManager.aggiungiGiocatore(new Giocatore("CPU2", gettoni, false));
-        turnManager.aggiungiGiocatore(new Giocatore("CPU3", gettoni, false));
+    public GameManager(String nome, int gettoni,String difficolta) {
+        turnManager.aggiungiGiocatore(new Giocatore(nome, gettoni, true,difficolta)); // mazziere umano
+        turnManager.aggiungiGiocatore(new Giocatore("CPU1", gettoni, false,difficolta));
+        turnManager.aggiungiGiocatore(new Giocatore("CPU2", gettoni, false,difficolta));
+        turnManager.aggiungiGiocatore(new Giocatore("CPU3", gettoni, false,difficolta));
         Mazzo.getInstance().mischiaCarte();
+        setStrategy(difficolta);
     }
 
     public void calcoloVincitore() {
@@ -139,12 +141,23 @@ public class GameManager {
         this.getTurnManager().notifyObservers();
     }
 
+
+
+    /**
+     *Stabilisce la modalità.
+     */
+    public void setStrategy(String strategy) {
+    if (Objects.equals(strategy, "Difficile"))
+        this.strategy = new CPUDifficile();
+    else
+        this.strategy = new CPU();
+    }
+
     /**
      * Fa eseguire automaticamente il turno alle CPU.
      */
     public void eseguiTurnoCPU() {
         Giocatore corrente = getTurnManager().getGiocatoreCorrente();
-
         if (!corrente.isMazziere()) {
             new Thread(() -> {
                 synchronized (cpuLock) {
