@@ -9,10 +9,8 @@ import Strategy.Action;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.Objects;
 
 public class GameManager {
-
     private final TurnManager turnManager = new TurnManager();
     private ActionStrategy strategy;
     private final Object cpuLock = new Object();
@@ -26,10 +24,17 @@ public class GameManager {
         turnManager.aggiungiGiocatore(new Giocatore("CPU3", gettoni, false));
         Mazzo.getInstance().mischiaCarte();
         setStrategy(strategy);
+        inizializzaMano();
     }
 
     public GameManager(File file) {
         caricaDaFile(file);
+    }
+
+    private void inizializzaMano(){
+        for (Giocatore g : getTurnManager().getGiocatori()){
+            g.addCarta(Mazzo.daiCarta());
+        }
     }
 
     public void calcoloVincitore() {
@@ -103,6 +108,7 @@ public class GameManager {
             g.svuotaMano();
             g.resetPuntata();
         }
+        inizializzaMano();
     }
 
     public TurnManager getTurnManager() {
@@ -111,19 +117,29 @@ public class GameManager {
 
     public void onPesca() {
         Giocatore giocatore = getTurnManager().getGiocatoreCorrente();
-        if (!giocatore.isOut())
-            giocatore.addCarta(Mazzo.daiCarta());
+        if (!(giocatore.isMazziere()) || giocatore.getPuntata() != 0) {
+            if (!giocatore.isOut())
+                giocatore.addCarta(Mazzo.daiCarta());
+            else
+                JOptionPane.showMessageDialog(null, giocatore.getNome() + " ha sballato");
+            this.getTurnManager().notifyObservers();
+            System.out.println(giocatore.getMano());
+        }
         else
-            JOptionPane.showMessageDialog(null, giocatore.getNome() + " ha sballato");
-        this.getTurnManager().notifyObservers();
-        System.out.println(giocatore.getMano());
+            JOptionPane.showMessageDialog(null, "Punta prima di pescare");
     }
 
     public void onPassa() {
         try {
-            getTurnManager().getGiocatoreCorrente().setPuntato(false);
-            getTurnManager().nextTurn();
-            eseguiTurnoCPU();
+            Giocatore giocatore = getTurnManager().getGiocatoreCorrente();
+            if (!(giocatore.isMazziere()) || giocatore.getPuntata() != 0) {
+                giocatore.setPuntato(false);
+                getTurnManager().nextTurn();
+                eseguiTurnoCPU();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Punta prima di passare");
+            }
         } catch (IndexOutOfBoundsException e) {
             getTurnManager().resetTurni();
             calcoloVincitore();
@@ -150,6 +166,7 @@ public class GameManager {
                 JOptionPane.showMessageDialog(null, "Non hai abbastanza gettoni");
         }
         this.getTurnManager().notifyObservers();
+
     }
 
     private String getStringStrategy(){
@@ -185,7 +202,6 @@ public class GameManager {
                         System.out.println(corrente.getNome() + "Sto puntando...");
                         corrente.punta(strategy.puntaGettoni(corrente, getTurnManager().getGiocatori()));
                         corrente.setPuntato(true);
-
                     }
                 Action action = strategy.chooseAction(corrente);
                 System.out.println(corrente.getNome() + " sceglie " + action);

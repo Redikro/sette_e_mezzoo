@@ -40,7 +40,6 @@ public class PlayerArea extends JPanel implements TurnObserver {
         punteggiPanel.setLayout(new BoxLayout(punteggiPanel, BoxLayout.Y_AXIS));
 
         immagineCarta.setPreferredSize(new Dimension(80, 110));
-        immagineCarta.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
         centro.add(immagineCarta, BorderLayout.WEST);
         immagineCarta.setScale(0.45);
 
