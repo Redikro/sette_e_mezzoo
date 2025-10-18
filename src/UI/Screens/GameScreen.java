@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+import Strategy.ActionStrategy;
+import Strategy.CPU;
+import Strategy.CPUDifficile;
 import UI.*;
 import UI.Panels.PlayerControlsPanel;
 import UI.Panels.TablePanel;

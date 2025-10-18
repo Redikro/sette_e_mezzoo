@@ -19,20 +19,18 @@ public class GameManager {
     private final GameOriginator originator = new GameOriginator();
     private final Caretaker caretaker = new Caretaker();
 
-    public GameManager(String nome, int gettoni,String difficolta) {
+    public GameManager(String nome, int gettoni,String strategy) {
         turnManager.aggiungiGiocatore(new Giocatore(nome, gettoni, true)); // mazziere umano
         turnManager.aggiungiGiocatore(new Giocatore("CPU1", gettoni, false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU2", gettoni, false));
         turnManager.aggiungiGiocatore(new Giocatore("CPU3", gettoni, false));
         Mazzo.getInstance().mischiaCarte();
-        setStrategy(difficolta);
+        setStrategy(strategy);
     }
 
     public GameManager(File file) {
         caricaDaFile(file);
     }
-
-
 
     public void calcoloVincitore() {
         JOptionPane.showMessageDialog(null, "Calcolo vincitori");
@@ -154,16 +152,16 @@ public class GameManager {
         this.getTurnManager().notifyObservers();
     }
 
+    private String getStringStrategy(){
+        return this.strategy instanceof CPUDifficile ? "Difficile" : "Normale";
+    }
 
 
     /**
      *Stabilisce la modalità.
      */
-    public void setStrategy(String strategy) {
-    if (Objects.equals(strategy, "Difficile"))
-        this.strategy = new CPUDifficile();
-    else
-        this.strategy = new CPU();
+    public void setStrategy(String mode) {
+        this.strategy = mode.equals("Difficile") ? new CPUDifficile() : new CPU();
     }
 
     /**
@@ -212,7 +210,7 @@ public class GameManager {
         }
     }
     public void salvaStato() {
-        GameData data = new GameData(turnManager.getGiocatori(), Mazzo.getInstance().getRemainingCardsSnapshot());
+        GameData data = new GameData(turnManager.getGiocatori(), Mazzo.getInstance().getRemainingCardsSnapshot(),getStringStrategy());
         System.out.println(data);
         originator.setState(data);
         caretaker.addMemento(originator.saveStateToMemento());
@@ -220,7 +218,7 @@ public class GameManager {
 
     public void salvaSuFile() {
         try {
-            GameData data = new GameData(turnManager.getGiocatori(), Mazzo.getInstance().getRemainingCardsSnapshot());
+            GameData data = new GameData(turnManager.getGiocatori(), Mazzo.getInstance().getRemainingCardsSnapshot(), getStringStrategy());
             originator.setState(data);
             GameMemento memento = originator.saveStateToMemento();
 
@@ -247,7 +245,7 @@ public class GameManager {
                 GameData restored = originator.getGameData();
                 turnManager.setGiocatori(restored.getGiocatore());
                 Mazzo.getInstance().setCarte(restored.getMazzo());
-
+                setStrategy(restored.getModalita());
                 JOptionPane.showMessageDialog(null, "Partita caricata da:\n" + file.getAbsolutePath());
 
         } catch (Exception e) {

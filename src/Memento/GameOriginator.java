@@ -8,7 +8,7 @@ public class GameOriginator {
     }
 
     public GameMemento saveStateToMemento() {
-        return new GameMemento(gameData.getGiocatore(),gameData.getMazzo());
+        return new GameMemento(gameData.getGiocatore(),gameData.getMazzo(), gameData.getModalita());
     }
 
     public void restoreFrom(Memento memento) {

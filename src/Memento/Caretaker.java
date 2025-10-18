@@ -10,9 +10,4 @@ public class Caretaker {
     public void addMemento(Memento m) {
         mementos.add(m);
     }
-
-    public Memento getLastMemento() {
-        if (mementos.isEmpty()) return null;
-        return mementos.getLast();
-    }
 }

@@ -64,7 +64,6 @@ public class TitleScreen implements Screen {
             chooser.setDialogTitle("Carica stato partita");
             int userSelection = chooser.showOpenDialog(null);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
-
                 File file = chooser.getSelectedFile();
                 frame.setScreen(new GameScreen(file));
             }
